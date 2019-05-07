@@ -25,21 +25,21 @@ public class EchoClient {
     }
 
     public void start()
-        throws Exception {
+            throws Exception {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
             b.group(group)
-                .channel(NioSocketChannel.class)
-                .remoteAddress(new InetSocketAddress(host, port))
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    public void initChannel(SocketChannel ch)
-                        throws Exception {
-                        ch.pipeline().addLast(
-                             new EchoClientHandler());
-                    }
-                });
+                    .channel(NioSocketChannel.class)
+                    .remoteAddress(new InetSocketAddress(host, port))
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch)
+                                throws Exception {
+                            ch.pipeline().addLast(
+                                    new EchoClientHandler());
+                        }
+                    });
             ChannelFuture f = b.connect().sync();
             f.channel().closeFuture().sync();
         } finally {
@@ -49,15 +49,15 @@ public class EchoClient {
 
     public static void main(String[] args)
             throws Exception {
-        if (args.length != 2) {
-            System.err.println("Usage: " + EchoClient.class.getSimpleName() +
-                    " <host> <port>"
-            );
-            return;
-        }
+//        if (args.length != 2) {
+//            System.err.println("Usage: " + EchoClient.class.getSimpleName() +
+//                    " <host> <port>"
+//            );
+//            return;
+//        }
 
-        final String host = args[0];
-        final int port = Integer.parseInt(args[1]);
+        final String host = "localhost";
+        final int port = 8888;
         new EchoClient(host, port).start();
     }
 }
